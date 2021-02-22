@@ -7,7 +7,7 @@ import {Banks, Templates, IBank, ITemplate, Items} from "./constants";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  previewMode = false
+  previewMode = false;
   banks = Banks;
   items = Items;
   templates: ITemplate[] = Templates;

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-preview',
@@ -10,9 +10,9 @@ export class PreviewComponent {
   @Input() set savedContent(content) {
     this._content = content;
     if (this.editor) {
-      this.render(this.form.value)
+      this.render(this.form.value);
     }
-  };
+  }
   form: FormGroup;
   editor: any;
   _content: string;
@@ -22,7 +22,7 @@ export class PreviewComponent {
     height: 500,
     width: '210mm',
     setup : (ed) => {
-      console.log('setup')
+      console.log('setup');
       this.editor = ed;
     },
     plugins: 'export print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker imagetools textpattern noneditable help formatpainter permanentpen pageembed charmap mentions quickbars linkchecker emoticons advtable',
@@ -30,16 +30,24 @@ export class PreviewComponent {
     toolbar: false,
     templates: [],
     template_replace_values: null,
-    variable_prefix: "[",
-    variable_suffix: "]",
+    variable_prefix: '[',
+    variable_suffix: ']',
     autosave_interval: '20s'
-  }
+  };
 
   constructor(private _fb: FormBuilder) {
     this.form = _fb.group({
-      CreationDate: [new Date()],
-      LoanNumber: ['']
-    })
+      bankName: ['HSBC'],
+      bankAddress: ['31 Oxford, London'],
+      bankZip: ['EC4M 7AW'],
+      CreationDate: [new Date().toISOString().split('T')[0]],
+      reference: [''],
+      saleTo: ['Czarnikow Sugar Pte Ltd CN'],
+      purchase: ['Mitr Phol CN'],
+      goods: ['Mt White Refined Sugar'],
+      currency: ['USD'],
+      amount: ['571,790.56']
+    });
   }
 
   onSubmit() {
@@ -55,7 +63,7 @@ export class PreviewComponent {
 
   onShowDateChange() {
     if (!this.showDate) {
-      this.render({... this.form.value, CreationDate: ''})
+      this.render({... this.form.value, CreationDate: ''});
     } else {
       this.render(this.form.value);
     }
