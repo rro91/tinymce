@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Banks, Templates, IBank, ITemplate, Items} from "./constants";
+import {Banks, Templates, IBank, ITemplate, Items} from './constants';
 
 @Component({
   selector: 'app-root',
@@ -21,15 +21,15 @@ export class AppComponent {
       this.editor = ed;
       ed.on('StoreDraft', (event) => {
         console.log('saved: ', event);
-        this.savedContent = ed.getContent()
+        this.savedContent = ed.getContent();
       });
-      ed.on('keydown', function(event) {
-        if (event.keyCode == 9) { // tab pressed
+      ed.on('keydown', (event) => {
+        if (event.keyCode === 9) { // tab pressed
           ed.execCommand('mceInsertContent', false, '&emsp;&emsp;'); // inserts tab
           event.preventDefault();
           return false;
         }
-        if (event.keyCode == 32) { // space bar
+        if (event.keyCode === 32) { // space bar
           if (event.shiftKey) {
             ed.execCommand('mceInsertContent', false, '&hairsp;'); // inserts small space
             event.preventDefault();
@@ -45,36 +45,37 @@ export class AppComponent {
     templates: this.templates,
     template_replace_values: this.chosenBank,
     template_preview_replace_values: this.chosenBank,
-    variable_prefix: "[",
-    variable_suffix: "]",
-    autosave_interval: '20s'
+    variable_prefix: '[',
+    variable_suffix: ']',
+    autosave_interval: '20s',
+  };
+
+  onEditorChange(e): void {
   }
 
-  onEditorChange(e) {
-  }
-
-  onBankChange(e) {
+  onBankChange(e): void {
     this.chosenBank = this.banks.find(bank => bank.id === +e.target.value);
-    this.editor.settings.template_replace_values = this.chosenBank
-    this.editor.settings.template_preview_replace_values = this.chosenBank
+    this.editor.settings.template_replace_values = this.chosenBank;
+    this.editor.settings.template_preview_replace_values = this.chosenBank;
   }
 
-  onItemChange(e) {
+  onItemChange(e): void {
     const chosenVariable =  this.items.find(item => item.id === +e.target.value);
     this.editor.execCommand('mceInsertContent', false, `{$${chosenVariable.name}}`);
 
   }
 
-  onSave(e) {
-    console.log(e)
+  onSave(e): void {
+    console.log(e);
   }
 
-  onModeChange() {
+  onModeChange(): void {
     this.previewMode = !this.previewMode;
     this.editor.mode.set(this.previewMode ? 'readonly' : 'design');
   }
 
-  saveContent() {
+  saveContent(): void {
     this.savedContent = this.editor.getContent();
+    console.log(this.savedContent);
   }
 }

@@ -3,11 +3,6 @@
 <div style="display: flex; justify-content: space-between">
   <div [hidden]="previewMode">
     <ng-container>
-<!--      Create template for:-->
-<!--      <select (change)="onBankChange($event)">-->
-<!--        <option>-</option>-->
-<!--        <option *ngFor="let bank of banks" [value]="bank.id">{{bank.name}}</option>-->
-<!--      </select>-->
       Select variable:
       <select (change)="onItemChange($event)">
         <option>-</option>
@@ -17,7 +12,11 @@
       <br/>
       <p>To insert block item use <span class="tox" style="position: relative; top: 5px;"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24"><path d="M19 19v-1H5v1h14zM9 16v-4a5 5 0 116 0v4h4a2 2 0 012 2v3H3v-3c0-1.1.9-2 2-2h4zm4 0v-5l.8-.6a3 3 0 10-3.6 0l.8.6v5h2z" fill-rule="nonzero"></path></svg></span></span> icon</p>
     </ng-container>
-    <editor [init]="config" (onSaveContent)="onSave($event)" [apiKey]="'9vzj9j30btllv1sp8sa5055z5bosc1q7exfg5fw1jr0onkhw'" (onChange)="onEditorChange($event)"></editor>
+    <editor
+      [init]="config"
+      (onSaveContent)="onSave($event)"
+      [apiKey]="'9vzj9j30btllv1sp8sa5055z5bosc1q7exfg5fw1jr0onkhw'"
+      (onChange)="onEditorChange($event)"></editor>
   </div>
   <div [hidden]="!previewMode">
     <app-preview [savedContent]="savedContent"></app-preview>

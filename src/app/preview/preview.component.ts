@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-preview',
@@ -13,6 +13,7 @@ export class PreviewComponent {
       this.render(this.form.value);
     }
   }
+
   form: FormGroup;
   editor: any;
   _content: string;
@@ -21,7 +22,7 @@ export class PreviewComponent {
   config = {
     height: 500,
     width: '210mm',
-    setup : (ed) => {
+    setup: (ed) => {
       console.log('setup');
       this.editor = ed;
     },
@@ -46,26 +47,58 @@ export class PreviewComponent {
       purchase: ['Mitr Phol CN'],
       goods: ['Mt White Refined Sugar'],
       currency: ['USD'],
-      amount: ['571,790.56']
+      amount: ['571,790.56'],
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.render(this.form.value);
   }
 
-  render(value) {
+  render(value): void {
     this.editor.setContent('');
     this.editor.settings.template_replace_values = value;
+    this.editor.settings.template_replace_values = {
+      ...this.editor.settings.template_replace_values,
+      documents: [{value: 'Doc1'}, {value: 'Doc2'}]
+    };
     this.editor.execCommand('mceInsertTemplate', false, this._content);
     this.editor.mode.set('readonly');
+    this.iterateData();
   }
 
-  onShowDateChange() {
+  onShowDateChange(): void {
     if (!this.showDate) {
-      this.render({... this.form.value, CreationDate: ''});
+      this.render({...this.form.value, CreationDate: ''});
     } else {
       this.render(this.form.value);
     }
+  }
+
+  iterateData(): void {
+    const variables = [
+      {
+        name: 'supportingDocs',
+        values: ['Doc1', 'Doc2']
+      }
+    ];
+    const content = this.editor.getContent();
+
+    const container = document.createElement('div');
+    container.innerHTML = content;
+    const iterables = container.querySelectorAll('.iterable') as NodeListOf<HTMLElement>;
+    Array.from(iterables).forEach((el) => {
+      const object = el.dataset.object;
+      const itemsContainer = el.querySelector('.iterable-container');
+      const item = el.querySelector('.iterationItem');
+      const data = variables.find(variable => variable.name === object);
+      itemsContainer.innerHTML = '';
+      data.values.forEach(value => {
+        const newItem = item.cloneNode() as HTMLElement;
+        newItem.innerHTML = value;
+        itemsContainer.appendChild(newItem);
+      });
+    });
+    this.editor.setContent(container.innerHTML);
   }
 }
