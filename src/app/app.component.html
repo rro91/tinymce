@@ -1,13 +1,7 @@
-<a [ngStyle]="{'font-weight' : !previewMode ? '800' : '400'}" (click)="onModeChange()">Template maker</a> | <a [ngStyle]="{'font-weight' : previewMode ? '800' : '400'}" (click)="onModeChange()">Preview</a><br/>
-<hr />
+<!--<a [ngStyle]="{'font-weight' : !previewMode ? '800' : '400'}" (click)="onModeChange()">Template maker</a> | <a [ngStyle]="{'font-weight' : previewMode ? '800' : '400'}" (click)="onModeChange()">Preview</a><br/>-->
 <div style="display: flex; justify-content: space-between">
-  <div [hidden]="previewMode">
+  <div>
     <ng-container>
-<!--      Select variable:-->
-<!--      <select (change)="onItemChange($event)">-->
-<!--        <option>-</option>-->
-<!--        <option *ngFor="let item of items" [value]="item.id">{{item.name}}</option>-->
-<!--      </select>-->
       <button (click)="saveContent()">Save</button>
       <br/>
       <p>To insert block item use <span class="tox" style="position: relative; top: 5px;"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24"><path d="M19 19v-1H5v1h14zM9 16v-4a5 5 0 116 0v4h4a2 2 0 012 2v3H3v-3c0-1.1.9-2 2-2h4zm4 0v-5l.8-.6a3 3 0 10-3.6 0l.8.6v5h2z" fill-rule="nonzero"></path></svg></span></span> icon</p>
@@ -18,7 +12,7 @@
       [apiKey]="'9vzj9j30btllv1sp8sa5055z5bosc1q7exfg5fw1jr0onkhw'"
       (onChange)="onEditorChange($event)"></editor>
   </div>
-  <div [hidden]="!previewMode">
+  <div style="margin-top: 83px;">
     <app-preview [savedContent]="savedContent"></app-preview>
   </div>
 </div>
